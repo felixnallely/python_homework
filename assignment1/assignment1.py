@@ -3,30 +3,38 @@ def hello():
     return "Hello!" 
 print(hello())
 
+
 #Task 2: Greet w a formatted String
 def greet(name):
     return f"Hello, {name}!"
 print(greet("Lisa"))
 
+
 #Task 3: Calculator
 def calc(a, b, operation = "multiply"):
-    if operation == "add":
-        return a+b
-    elif operation == "subtract":
-        return a-b 
-    elif operation == "multiply":
-        return a*b
-    elif operation == "divide":
-        return a/b if b != 0 else "You can't divide by 0!"
-    elif operation == "modulo":
-        return a%b if b != 0 else "You can't divide by 0!"
-    elif operation == "int_divide":
-        return a//b if b != 0 else "You can't divide by 0!"
-    elif operation == "power":
-        return a**b 
-    else:
-        return "Invalid operations cannot be Multiplied!"
-print(calc(2, 5, "multiply"))
+    try:
+        if operation == "add":
+            return a+b
+        elif operation == "subtract":
+            return a-b 
+        elif operation == "multiply":
+            return a*b
+        elif operation == "divide":
+            return a/b if b != 0 else "You can't divide by 0!"
+        elif operation == "modulo":
+            return a%b if b != 0 else "You can't divide by 0!"
+        elif operation == "int_divide":
+            return a//b if b != 0 else "You can't divide by 0!"
+        elif operation == "power":
+            return a**b 
+        else:
+            return "Invalid operations cannot be multiplied!"
+    except TypeError:
+        return "You can't multiply those values!"
+#print(calc(2, 5, "multiply"))
+print(calc("first", "second", "multiply"))
+
+
 
 #Task 4: Data Type Conversion 
 def data_type_conversion(value, type_requested):
@@ -41,30 +49,36 @@ def data_type_conversion(value, type_requested):
         return f"You can't convert {value} into a {type_requested}."
 print(data_type_conversion("27", "float"))
 
+
 #Task 5: Grading System 
 def grade(*scores):
-    if not scores:
+    try:
+        if not scores:
+            return "No scores provided."
+        average = sum(scores)/len(scores)
+        if average >= 90:
+            return "A"
+        elif average >= 80:
+            return "B"
+        elif average >= 70:
+            return "C"
+        elif average >= 60:
+            return "D"
+        else:
+            return "F"
+    except TypeError:
         return "Invalid data was provided."
-    average = sum(scores)/len(scores)
-    if average >= 90:
-        return "A"
-    elif average >= 80:
-        return "B"
-    elif average >= "70":
-        return "C"
-    elif average >= "60":
-        return "D"
-    else:
-        return "F"
 print(grade(75, 85, 95))
+
 
 #Task 6: Use a For Loop w/ a Range
 def repeat(string, count):
-    repeat_string = " "
+    repeat_string = ""
     for _ in range(count): 
         repeat_string += string
     return repeat_string
 print(repeat("up ", 4))
+
 
 #Task 7: Student Scores (**Kwargs)
 def student_scores(position_type, **kwargs):
@@ -77,7 +91,10 @@ def student_scores(position_type, **kwargs):
         return sum(scores)/len(scores)
     else: 
         return ValueError("position_type not available.")
+#print(student_scores("mean", Tom=75, Dick=89, Angela=91))
+print(student_scores("best", Tom=75, Dick=89, Angela=91, Frank=50))
     
+
 
 #Task 8: Titleize
 def titleize(string):
@@ -96,9 +113,10 @@ def titleize(string):
 print(titleize("after on"))
 #print(titleize("green eggs and ham"))
 
+
 #Task 9: Hangman
 def hangman(secret, guess): 
-    result = " "
+    result = ""
     for letter in secret: 
         if letter in guess:
             result += letter
@@ -106,6 +124,7 @@ def hangman(secret, guess):
             result += "_"
     return result
 print(hangman("difficulty", "ic"))
+
 
 #Task 10: Pig Latin 
 def pig_latin(a_sentence):
@@ -116,7 +135,11 @@ def pig_latin(a_sentence):
     for word in words:
         if word[0] in vowels: 
             new_words.append(word + "ay")
+        elif word.startswith("qu"):
+            return word[2:] + word[:2] + "ay"
         else:
             new_words.append(word[1:] + word[0] + "ay")
     return " ".join(new_words)
 print(pig_latin("apple"))
+print(pig_latin("the quick brown fox"))
+print(pig_latin("quiet"))
