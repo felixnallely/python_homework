@@ -133,13 +133,34 @@ def pig_latin(a_sentence):
     vowels = "aeiou"
     
     for word in words:
+        #rule 1 string starts w/ vowel add "ay" to end 
         if word[0] in vowels: 
             new_words.append(word + "ay")
+
+            #rule 2 sting is a special word "qu"  
         elif word.startswith("qu"):
-            return word[2:] + word[:2] + "ay"
+            new_words.append(word[2:] + "quay")
+
         else:
-            new_words.append(word[1:] + word[0] + "ay")
+            # rule 3 one or several consonants move to end and add "ay" to end
+            consonant_string = ""
+            entire_word = word
+
+            for i, letter in enumerate(word):
+                if letter in vowels or (i > 0 and letter == 'y'):
+                    entire_word = word[i:]
+                    break
+                elif i > 0 and letter == 'u' and consonant_string.endswith('q'):
+                    consonant_string += letter
+                    entire_word = word[i+1:]
+                    break
+                else: 
+                    consonant_string += letter
+
+            new_words.append(entire_word + consonant_string + "ay")
     return " ".join(new_words)
-print(pig_latin("apple"))
+
+#print(pig_latin("apple"))
 print(pig_latin("the quick brown fox"))
-print(pig_latin("quiet"))
+#print(pig_latin("quiet"))
+
