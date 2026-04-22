@@ -22,7 +22,7 @@ def read_employees():
         return data
     except Exception as e: 
         print("Exception occurred.")
-        trace_back = traceback.extract_tb(e._traceback_)
+        trace_back = traceback.extract_tb(e.__traceback__)
         stack_trace = []
         for trace in trace_back:
             stack_trace.append(
@@ -39,8 +39,8 @@ print(employees)
 
 
 #Task 3: 
-def column_index(first_name):
-    return employees["fields"].index(first_name)
+def column_index(column_name):
+    return employees["fields"].index(column_name)
 
 employee_id_column = column_index("employee_id")
 
@@ -189,5 +189,3 @@ def write_sorted_list():
 sorted_minutes = write_sorted_list()
 print(sorted_minutes)
 #converted_list = write_sorted_list()
-
-
