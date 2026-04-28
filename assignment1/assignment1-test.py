@@ -2,7 +2,6 @@ import assignment1 as a1
 
 def test_hello():
     assert a1.hello() == "Hello!"
-print(test_hello())
 
 def test_greet():
     assert a1.greet("James") == "Hello, James!"
