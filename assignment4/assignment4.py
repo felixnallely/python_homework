@@ -91,7 +91,7 @@ print("---Convert Hire Date ---")
 print(clean_data)
 
 clean_data['Name'] = clean_data['Name'].str.strip().str.upper()
-clean_data['Department'] = clean_data['Department'].str.strip().str.upper
+clean_data['Department'] = clean_data['Department'].str.strip().str.upper()
 print("---Strip whitespace, Name & Department uppercase ---")
 print(clean_data)
 
