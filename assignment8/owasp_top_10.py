@@ -1,17 +1,20 @@
+#Task 6: Scraping Structured Data
 import pandas as pd 
-import json
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By 
-import time
+import time 
 
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 driver.get("https://owasp.org/Top10/2021/")
-time.sleep(5)
+time.sleep(3)
 
-items = driver.find_elements(By.XPATH, "//li[@class='md-nav__item']/a")
+driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+time.sleep(3)
+
+items = driver.find_elements(By.XPATH, "//a[starts-with(@href, 'https://owasp.org/Top10/2021/A')]")
 
 results = []
 for item in items: 
