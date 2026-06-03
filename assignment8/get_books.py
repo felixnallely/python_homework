@@ -3,12 +3,10 @@
 # There are also many bots that are not allowed.
 
 #Task 2: Understanding HTML and the DOMM for the Durham Library Site 
-#HTML for single search result(hint and li element): div "cp-search-result-item-info" 
+#HTML for single search result(hint a li element): li "cp-search-result-item" 
 #Element that stores title (tag/class value): h3 "cp-title"
-# Author element (hint: a link): 
-#Book format and year published: div "cp-format-info" span "display-info-primary"
-
-
+# Author element (hint: a link): h3 "cp-author-link"
+#Book format and year published:  span "cp-screen-reader-message" (tried div "cp-format-info" span "display-info-primary")
 
 
 #Task 3: Write a Program to Extract this Data
@@ -26,14 +24,14 @@ driver.get("https://durhamcounty.bibliocommons.com/v2/search?query=learning%20sp
 
 time.sleep(3)
 
-#Step 1: Find result tags and class "cp-search=result-item-content"
-results_divs = driver.find_elements(By.XPATH, ".//div[@class='cp-search-result-item-info']")
+#Step 1: Find result tags and class "cp-search-result-item-info"
+results_divs = driver.find_elements(By.XPATH, ".//li[@class='row cp-search-result-item']")
 print("Found results:", len(results_divs))
 
 results = []
 
 for div in results_divs: 
-    try: #Step 2: Find title tag with class "cp-title-link"
+    try: #Step 2: Find title tag with class "cp-title"
         title_element = div.find_element(By.XPATH, ".//h3[@class='cp-title']")
         title = title_element.text.strip()
     except:
@@ -45,19 +43,20 @@ for div in results_divs:
 
     #Step 4: <span> w class for format and year "cp-screen-reader-message"
     format_elements = div.find_elements(By.XPATH, ".//span[@class='cp-screen-reader-message']")
+    
 
     if format_elements: 
         info = format_elements[0].text.strip()
         if "," in info:
-            format_text, rest = [x.strip() for x in info.split(",", 1)]
+           format_text, rest = [x.strip() for x in info.split(",", 1)]
         else:
             format_text = info
             rest = "Unknown"
-
+            
         if "-" in rest:
             year_text = [x.strip() for x in rest.split("-", 1)] 
         else:
-            year_text = rest
+           year_text = rest
     else: 
         format_text = "Unknown"
         year_text = "Unknown"
@@ -72,6 +71,8 @@ for div in results_divs:
 
 driver.quit()
 
+
+#Task 4: Write out the Data
 df = pd.DataFrame(results)
 print(df)
 
