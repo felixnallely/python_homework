@@ -24,7 +24,7 @@ driver.get("https://durhamcounty.bibliocommons.com/v2/search?query=learning%20sp
 
 time.sleep(3)
 
-#Step 1: Find result tags and class "cp-search-result-item-info"
+#Step 1: Find result tags and class "row cp-search-result-item"
 results_divs = driver.find_elements(By.XPATH, ".//li[@class='row cp-search-result-item']")
 print("Found results:", len(results_divs))
 
