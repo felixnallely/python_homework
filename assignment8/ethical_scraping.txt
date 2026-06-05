@@ -1,0 +1,14 @@
+#Task 5: Ethical Web Scraping 
+
+#Which sections of the website are restricted for crawling?
+There are a few sections restricted to crawling for example; api, wiki/Special:, and wiki/Wikipedia:Administratorer.
+
+
+#Are there specific rules for certain user agents?
+Yes certain user agents are not allowed to crawl such as DOC, and ZAO unless obey the rules and don;t feed search engines.
+Any user agents:semrushbot is allowed to crawl but must have a 5 second delay. 
+
+#Refelct
+It is important for websites to use robots.txt because it protects work from being stolen. 
+Having a robots.txt helps reduce bots and crawlers on a website this keeps them from slowing down the performance of the page. 
+A robots.txt acts as a doorman, making sure bots don't go into any restricted areas making sure information is kept safe. 
