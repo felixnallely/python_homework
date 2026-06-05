@@ -33,7 +33,7 @@ def add_subscriber(conn, name, address):
     try: 
         cursor = conn.cursor()
     #Check for duplicates 
-        cursor.execute("SELECT id FROM subscribers WHERE name = ? AND address = ?", (name, address))
+        cursor.execute("SELECT subscriber_id FROM subscribers WHERE name = ? AND address = ?", (name, address))
         if cursor.fetchone():
             print(f"Subscriber '{name}' at '{address}' already exists.")
             return
@@ -75,8 +75,8 @@ def query_magazines_by_publisher(conn, publisher_id):
     cursor.execute("""
         SELECT magazines.id, magazines.name, publishers.name
         FROM magazines
-        JOIN publishers ON magazines.publisher_id = publisher.id
-        WHERE publisher.id = ?
+        JOIN publishers ON magazines.publisher_id = publishers.id
+        WHERE publishers.id = ?
     """, (publisher_id,))
     print(f"\nMagazines for Publisher {publisher_id}:")
     for row in cursor.fetchall():
@@ -119,8 +119,8 @@ with sqlite3.connect("../db/magazines.db") as conn:
     try:
         cursor.execute(""" 
         CREATE TABLE IF NOT EXISTS subscribers (
-            id INTEGER PRIMARY KEY, 
-            name TEXT NOT NULL UNIQUE,
+            subscriber_id INTEGER PRIMARY KEY, 
+            name TEXT NOT NULL,
             address TEXT NOT NULL
         )
         """)
@@ -135,8 +135,8 @@ with sqlite3.connect("../db/magazines.db") as conn:
             subscriber_id INTEGER NOT NULL,
             magazine_id INTEGER NOT NULL, 
             expiration_date TEXT NOT NULL, 
-            FOREIGN KEY (subscriber_id) REFERENCEs subscribers(id)
-            FOREIGN KEY (magazine_id) REFERENCEs magazines(id)
+            FOREIGN KEY (subscriber_id) REFERENCES subscribers(subscriber_id),
+            FOREIGN KEY (magazine_id) REFERENCES magazines(id),
             UNIQUE (subscriber_id, magazine_id)
         )
         """)
@@ -152,19 +152,18 @@ with sqlite3.connect("../db/magazines.db") as conn:
     add_magazine(conn, "Maps Weekly", 2)
     add_magazine(conn, "Exploring 101 Daily", 3)
 
-    add_subscriber(conn, "Jonhson Henderson", "678 Main St")
-    add_subscriber(conn, "June August", "121 New St")
-    add_subscriber(conn, "Madison henderson", "2121 Willow Rd")
+    add_subscriber(conn, "Jonhson Larryson", "786 Green St")
+    add_subscriber(conn, "June May", "122 News St")
+    add_subscriber(conn, "Henderson Madison", "2121 Willows Rd")
 
-    add_subscription(conn, 1, 1, "2025-12-31")
-    add_subscription(conn, 1, 2, "2026-06-01")
-    add_subscription(conn, 2, 3, "2025-08-25")
+    add_subscription(conn, 1, 2, "2025-12-30")
+    add_subscription(conn, 1, 1, "2026-10-01")
+    add_subscription(conn, 3, 2, "2025-07-25")
     
     conn.commit()
     #print("Database and tables created successfully.")
     print("Data added successfully.")
-
-
-
-    #conn.close()
-    #print("Connection closed.")
+    
+    query_all_subscribers(conn)
+    query_magazines_sorted(conn)
+    query_magazines_by_publisher(conn, 1)
