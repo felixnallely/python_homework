@@ -11,6 +11,7 @@ def task1(cursor):
         JOIN line_items ON orders.order_id = line_items.order_id
         JOIN products ON line_items.product_id = products.product_id
         GROUP BY orders.order_id
+        ORDER BY orders.order_id 
         LIMIT 5;
     """
     cursor.execute(query)
