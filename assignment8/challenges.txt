@@ -1,0 +1,4 @@
+#Task 6: Scraping Structured Data: Challenges 
+One of the challenges I faced was locating the OWASP Top 10 list on thr HTML structure. So I decided to click on the link that the main section of the provided website showed. 
+Doing so helped me find the page for the TOP 10 list in 2021, so I decided to use this link and HTML structure for this task. 
+Another challenge was not knowing whether or no the csv file was created without looking at the files, so I made sure to add a print code to show whether or not the csv file was created. 
