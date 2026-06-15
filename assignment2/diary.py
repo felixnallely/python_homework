@@ -6,15 +6,17 @@ def main():
             first_prompt =True
             while True:
                 if first_prompt:
-                    line = input("What happened today?")
+                    line = input("What happened today? ")
                     first_prompt = False
                 else:
-                    line = input("What else?")
+                    line = input("What else? ")
                 diary.write(line + "\n")
                 if line == "done for now":
                     break
 
     except Exception as e:
+        print("An exception occurred.")
+        
         trace_back = traceback.extract_tb(e.__traceback__)
         stack_trace = list()
         for trace in trace_back:
@@ -27,7 +29,3 @@ def main():
 
 if __name__ == "__main__":
     main() 
-
-#except Exception as e:
-        #print("An exception occurred.", type(e).__name__)
-        #traceback.print_exc()

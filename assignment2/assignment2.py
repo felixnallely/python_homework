@@ -188,4 +188,3 @@ def write_sorted_list():
 
 sorted_minutes = write_sorted_list()
 print(sorted_minutes)
-#converted_list = write_sorted_list()
