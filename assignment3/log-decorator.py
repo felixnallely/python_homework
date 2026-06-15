@@ -27,12 +27,15 @@ def logger_decorator(func):
     
     return wrapper 
 
+@logger_decorator
 def no_parameters():
     print("Hello, World!")
 
+@logger_decorator
 def positional_argument(*args):
     return True
 
+@logger_decorator
 def keyword_argument(**kwargs):
     return logger_decorator 
 

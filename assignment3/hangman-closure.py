@@ -13,11 +13,7 @@ def make_hangman(secret_word):
                 display += "_"
         print(display)
 
-        for char in secret_word: 
-            if char not in guesses: 
-                return False
-            else: 
-                return True 
+        return all(char.lower() in guesses for char in secret_word)
     return hangman_closure 
 
 if __name__ == "__main__":
