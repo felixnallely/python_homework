@@ -1,0 +1,30 @@
+function: no_parameters
+positional parameters: none
+keyword parameters: none
+return: None
+----
+function: positional_argument
+positional parameters: [1, 2, 3, 'apple']
+keyword parameters: none
+return: True
+----
+function: keyword_argument
+positional parameters: none
+keyword parameters: {'a': 10, 'b': 20, 'name': 'Nallely'}
+return: <function logger_decorator at 0x000001FBB7E0F690>
+----
+function: no_parameters
+positional parameters: none
+keyword parameters: none
+return: None
+----
+function: positional_argument
+positional parameters: [1, 2, 3, 'apple']
+keyword parameters: none
+return: True
+----
+function: keyword_argument
+positional parameters: none
+keyword parameters: {'a': 10, 'b': 20, 'name': 'Nallely'}
+return: <function logger_decorator at 0x000001CB1D16F690>
+----
