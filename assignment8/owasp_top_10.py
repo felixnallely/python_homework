@@ -8,13 +8,17 @@ from selenium.webdriver.common.by import By
 import time 
 
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-driver.get("https://owasp.org/Top10/2021/")
+driver.get("https://owasp.org/www-project-top-ten/")
 time.sleep(3)
 
+#load page 2 (that contains the list)
+link2 = driver.find_element(By.XPATH, "//a[contains(text(), '2021')]").get_attribute("href")
+
+driver.get(link2)
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 time.sleep(3)
 
-items = driver.find_elements(By.XPATH, "//a[starts-with(@href, 'https://owasp.org/Top10/2021/A')]")
+items = driver.find_elements(By.XPATH, "//ol/li/a")
 
 results = []
 for item in items: 
@@ -28,8 +32,9 @@ for item in items:
 
 driver.quit()
 
-print(results)
-
+#Save to df
 df = pd.DataFrame(results)
+print(df)
+
 df.to_csv("owasp_top_10.csv", index=False)
 print("CSV File was Created.")

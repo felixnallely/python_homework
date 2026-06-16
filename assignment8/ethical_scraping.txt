@@ -12,7 +12,7 @@ Disallow: /wiki/Wikipedia%3ARequests_for_adminship/
 
 
 #Are there specific rules for certain user agents?
-Yes certain user agents are not allowed to crawl such as;
+Yes, certain user agents are not allowed to crawl such as;
 User-agent: WebStripper
 Disallow: /
 and 

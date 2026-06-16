@@ -3,10 +3,10 @@
 # There are also many bots that are not allowed.
 
 #Task 2: Understanding HTML and the DOMM for the Durham Library Site 
-#HTML for single search result(hint a li element): li "cp-search-result-item" 
-#Element that stores title (tag/class value): h3 "cp-title"
-# Author element (hint: a link): h3 "cp-author-link"
-#Book format and year published:  span "cp-screen-reader-message" (tried div "cp-format-info" span "display-info-primary")
+#HTML for single search result(hint a li element): li class="row cp-search-result-item" 
+#Element that stores title (tag/class value): h3 class="cp-title-link"
+# Author element (hint: a link): a class="cp-author-link"
+#Book format and year published:  span class="cp-screen-reader-message" (tried div "cp-format-info" span "display-info-primary")
 
 
 #Task 3: Write a Program to Extract this Data
@@ -24,51 +24,52 @@ driver.get("https://durhamcounty.bibliocommons.com/v2/search?query=learning%20sp
 
 time.sleep(3)
 
-#Step 1: Find result tags and class "row cp-search-result-item"
-results_divs = driver.find_elements(By.XPATH, ".//li[@class='row cp-search-result-item']")
+results_divs = driver.find_elements(By.CLASS_NAME, "cp-search-result-item-content")
 print("Found results:", len(results_divs))
 
 results = []
 
 for div in results_divs: 
-    try: #Step 2: Find title tag with class "cp-title"
-        title_element = div.find_element(By.XPATH, ".//h3[@class='cp-title']")
-        title = title_element.text.strip()
-    except:
-        continue 
+    try: #Expand to load format/year
+        div.click()
+        time.sleep(0.5)
+    except: 
+        pass
 
-    #Step 3: find author tag and class "cp-author-link"
-    author_elements = div.find_elements(By.XPATH, ".//span[@class='cp-author-link']")
-    authors = ";".join(a.text.strip() for a in author_elements)
-
-    #Step 4: <span> w class for format and year "cp-screen-reader-message"
-    format_elements = div.find_elements(By.XPATH, ".//span[@class='cp-screen-reader-message']")
-    
-
-    if format_elements: 
-        info = format_elements[0].text.strip()
-        if "," in info:
-           format_text, rest = [x.strip() for x in info.split(",", 1)]
+    #Title 
+    title_elements = div.find_elements(By.CLASS_NAME, "cp-title-link")
+    if len(title_elements) > 0: 
+        title = title_elements[0].text.strip()
+    else:
+        title_elements = div.find_elements(By.CLASS_NAME, "cp-title")
+        if len(title_elements) > 0:
+            title = title_elements[0].text.strip()
         else:
+            continue
+
+    #Author
+    author_element = div.find_elements(By.CLASS_NAME, "cp-author-link")
+    authors = "; ".join([a.text.strip() for a in author_element])
+
+    #format/year
+    try:
+        info = div.find_element(By.CLASS_NAME, "display-info-primary").text.strip()
+        if "," in info: 
+            format_text, year_text = [x.strip() for x in info.split(",", 1)]
+        else: 
             format_text = info
-            rest = "Unknown"
-            
-        if "-" in rest:
-            year_text = [x.strip() for x in rest.split("-", 1)] 
-        else:
-           year_text = rest
-    else: 
+            year_text = "Unknown"
+    except: 
         format_text = "Unknown"
-        year_text = "Unknown"
+        year_text = "Unknown" 
 
     format_year = f"{format_text} - {year_text}"
-
+    
     results.append({
         "Title": title,
         "Author": authors,
         "Format-Year": format_year
     })
-
 driver.quit()
 
 
